@@ -36,6 +36,7 @@
 #include "PulseCode/MouseButtonCodes.h"
 
 #include "Global.h"
+#include "PulseCode/SettingsManager.h"
 
 #ifdef PS_PLATFORM_WINDOWS
 #include <Windows.h>

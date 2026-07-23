@@ -44,7 +44,7 @@ namespace PulseCode {
 		void OnMouseRelease();
 	private:
 		std::string m_FontName = "CascadiaCode";
-		float m_FontSize = 24.0f;
+		float m_FontSize = 20.0f;
 
 		float m_X, m_Y, m_W, m_H;
 		float m_ScrollX = 0.0f, m_ScrollY = 0.0f;

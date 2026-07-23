@@ -382,6 +382,7 @@ namespace PulseCode {
 		{
 			glfwSetWindowPos(m_Window, newX, newY);
 		}
+		SettingsManager::Get().SetWindowSize(newW, newH);
 	}
 
 	void WindowsWindow::StopResizeWindow()
@@ -396,11 +397,11 @@ namespace PulseCode {
 
 		if (ThemeManager::IsDarkTheme())
 		{
-			iconPath = "H:/Projects/CppProject/PulseCode-Studio/Core/Resources/Images/PulseStudio_500x500_White.png";
+			iconPath = "H:/Projects/CppProject/PulseCode-Studio/Core/Resources/Images/PulseCodeStudio_White.png";
 		}
 		else
 		{
-			iconPath = "H:/Projects/CppProject/PulseCode-Studio/Core/Resources/Images/PulseStudio_500x500_Black.png";
+			iconPath = "H:/Projects/CppProject/PulseCode-Studio/Core/Resources/Images/PulseCodeStudio_Black.png";
 		}
 
 		unsigned char* data = stbi_load(iconPath.c_str(), &width, &height, &channels, 4);

@@ -18,7 +18,7 @@ namespace PulseCode {
 		void OnUpdate(float deltaTime);
 		bool OnEvent(Event& event);
 
-		void OpenFile(const std::string& filepath);
+		void OpenFile(const std::string& filepath, bool IsInLoad = false);
 
 		void CloseTab(int index);
 		void CloseCurrentTab();
@@ -28,6 +28,9 @@ namespace PulseCode {
 		CodeEditor* GetActiveEditor() const;
 
 		void Draw();
+
+		static bool IsTabEmpty();
+		void UpdateOpenFilesList();
 	private:
 		struct Tab
 		{
@@ -37,7 +40,7 @@ namespace PulseCode {
 			bool isActive = false;
 		};
 
-		std::vector<Tab> m_Tabs;
+		static std::vector<Tab> m_Tabs;
 		int m_ActiveTabIndex = -1;
 
 		float m_TabBarX, m_TabBarY, m_TabBarW, m_TabBarH;

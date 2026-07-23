@@ -18,6 +18,7 @@
 #endif
 
 #include "Input.h"
+#include "SettingsManager.h"
 
 namespace PulseCode {
 
@@ -30,15 +31,20 @@ namespace PulseCode {
 		PS_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
+		auto& settings = SettingsManager::Get().GetSettings();
+
 		Log::Init();
 		PS_CORE_INFO("Initilized log!");
 
-		ThemeManager::SetTheme(Theme::Dark);
-		ChannelManager::SetChannel(Channel::Preview);
+		SettingsManager::Get().Load();
 
-		WindowProps props("PulseCode-Studio Integrated Development Environment", 1720, 1000);
+		ThemeManager::SetTheme((Theme)settings.themeIndex);
+		ChannelManager::SetChannel((Channel)settings.channelIndex);
+
+		WindowProps props("PulseCode-Studio Integrated Development Environment", settings.WindowWidth, settings.WindowHeight);
 		m_MainWindow = std::unique_ptr<Window>(Window::Create(props));
 		m_MainWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_MainWindow->SetVSync(true);
 
 		Input::Init();
 
@@ -55,21 +61,10 @@ namespace PulseCode {
 	{
 		TextRenderer::Get().Unload();
 
-		auto* window = glfwGetCurrentContext();
-		if (window)
-		{
-			glfwSetMouseButtonCallback(window, nullptr);
-			glfwSetCursorPosCallback(window, nullptr);
-			glfwSetScrollCallback(window, nullptr);
-			glfwSetKeyCallback(window, nullptr);
-			glfwSetCharCallback(window, nullptr);
-			glfwSetWindowCloseCallback(window, nullptr);
-			glfwSetWindowSizeCallback(window, nullptr);
-			glfwSetFramebufferSizeCallback(window, nullptr);
-		}
+		m_MainWindow.reset();
 
 		PS_INFO("Application destructor called.");
-		PS_CORE_WARN("Shutting down Pulse Studio...");
+		PS_CORE_WARN("Shutting down PulseCode Studio...");
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -86,7 +81,6 @@ namespace PulseCode {
 
 	void Application::OnEvent(Event& e)
 	{
-		PS_CORE_TRACE(e.ToString());
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )

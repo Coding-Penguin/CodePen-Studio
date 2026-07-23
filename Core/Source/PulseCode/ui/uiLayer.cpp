@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include "CodeEditor/CodeEditor.h"
+#include "PulseCode/SettingsManager.h"
 
 namespace PulseCode {
 
@@ -35,6 +36,8 @@ namespace PulseCode {
 		auto& app = Application::Get();
 		int width = app.GetWindow().GetWidth();
 		int height = app.GetWindow().GetHeight();
+
+		auto& settings = SettingsManager::Get().GetSettings();
 
 		m_StatusBar = new uiStatusBar();
 		m_StatusBar->OnAttach();
@@ -119,6 +122,10 @@ namespace PulseCode {
 		float tabW = width;
 		float tabH = height - topOffset - bottomOffset;
 		m_TabManager->SetBounds(tabX, tabY, tabW, tabH);
+		for (const auto& filepath : settings.openFiles)
+		{
+			m_TabManager->OpenFile(filepath, true);
+		}
 	}
 
 	void uiLayer::OnDetach() 

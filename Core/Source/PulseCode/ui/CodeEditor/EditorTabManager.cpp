@@ -4,7 +4,11 @@
 #include "PulseCode/Log.h"
 #include <glad/glad.h>
 
+#include "PulseCode/SettingsManager.h"
+
 namespace PulseCode {
+
+	std::vector<EditorTabManager::Tab> EditorTabManager::m_Tabs = {};
 
 	EditorTabManager::EditorTabManager()
 	{
@@ -190,7 +194,7 @@ namespace PulseCode {
 		return textWidth + 30.0f;
 	}
 
-	void EditorTabManager::OpenFile(const std::string& filepath)
+	void EditorTabManager::OpenFile(const std::string& filepath, bool IsInLoad)
 	{
 		for (size_t i = 0; i < m_Tabs.size(); ++i)
 		{
@@ -209,6 +213,11 @@ namespace PulseCode {
 		m_Tabs.push_back(std::move(newTab));
 
 		SwitchToTab((int)m_Tabs.size() - 1);
+
+		SettingsManager::Get().AddRecentFile(filepath);
+
+		if (!IsInLoad)
+			UpdateOpenFilesList();
 	}
 
 	void EditorTabManager::CloseTab(int index)
@@ -236,6 +245,7 @@ namespace PulseCode {
 				m_ActiveTabIndex--;
 			}
 		}
+		UpdateOpenFilesList();
 	}
 
 	void EditorTabManager::CloseCurrentTab()
@@ -305,6 +315,21 @@ namespace PulseCode {
 	{
 		std::filesystem::path p(path);
 		return p.filename().string();
+	}
+
+	bool EditorTabManager::IsTabEmpty()
+	{
+		return m_Tabs.empty();
+	}
+
+	void EditorTabManager::UpdateOpenFilesList()
+	{
+		std::vector<std::string> files;
+		for (auto& tab : m_Tabs)
+		{
+			files.push_back(tab.filepath);
+		}
+		SettingsManager::Get().SetOpenFiles(files);
 	}
 
 }

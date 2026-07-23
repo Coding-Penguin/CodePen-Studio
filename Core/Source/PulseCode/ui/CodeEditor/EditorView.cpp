@@ -9,6 +9,7 @@
 #include "PulseCode/FontManager.h"
 #include "HighLight.h"
 #include "PulseCode/Events/MouseEvent.h"
+#include "EditorTabManager.h"
 
 namespace PulseCode
 {
@@ -73,6 +74,9 @@ namespace PulseCode
 
 	void EditorView::Render(const TextBuffer& buffer, const Cursor& cursor, const Highlight& highlighter, float deltaTime)
 	{
+		if (EditorTabManager::IsTabEmpty())
+			return;
+
 		if (m_LineHeight <= 0)
 			m_LineHeight = 20.0f;
 		m_buffer = buffer;
