@@ -13,7 +13,7 @@
 
 #ifdef PS_PLATFORM_WINDOWS
 #include "Platform/Windows/WindowsWindow.h"
-#else define(PS_PLATFORM_LINUX)
+#elif define(PS_PLATFORM_LINUX)
 #include "Platform/Linux/LinuxWindow.h"
 #endif
 
@@ -133,7 +133,7 @@ namespace PulseCode {
 
 	void Application::Run()
 	{
-		PS_TRACE("Pulse Studio initialized and running.");
+		PS_TRACE("PulseCode Studio initialized and running.");
 
 		float lastTime = (float)glfwGetTime();
 		do 

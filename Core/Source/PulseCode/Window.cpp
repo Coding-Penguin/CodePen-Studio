@@ -17,7 +17,7 @@ namespace PulseCode {
         PS_TRACE("Creating Linux window...");
         return new LinuxWindow(props);
 #else
-        PS_CORE_ERROR("Pulse Studio IDE unsupported the platform!");
+        PS_CORE_ERROR("PulseCode Studio IDE unsupported the platform!");
         return nullptr;
 #endif
     }

@@ -6,7 +6,7 @@
 namespace PulseCode {
 
 	/*
-	* Events in Pulse Studio are currently blocking, meaning when an event occurs it immediately gets dispatched and must be dealt with right then and there.
+	* Events in PulseCode Studio are currently blocking, meaning when an event occurs it immediately gets dispatched and must be dealt with right then and there.
 	* For the future, a better strategy might be to buffer events in an event bus and process them during the "event" part of the update stage.
 	*/
 	

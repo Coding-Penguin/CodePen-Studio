@@ -3,7 +3,7 @@
 #ifdef PS_PLATFORM_WINDOWS
 #elif defined(PS_PLATFORM_LINUX)
 #else
-	#error Pulse Studio only supports Windows and Linux for now!
+	#error PulseCode Studio only supports Windows and Linux for now!
 #endif
 
 #ifdef PS_ENABLE_ASSERTS
