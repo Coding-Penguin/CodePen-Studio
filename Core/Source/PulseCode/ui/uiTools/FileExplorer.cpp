@@ -9,8 +9,8 @@
 
 namespace PulseCode {
 
-	FileExplorer::FileExplorer(const std::string& rootPath)
-		: uiWindow("File Explorer"), m_RootPath(rootPath)
+	FileExplorer::FileExplorer(const std::string& rootPath, PropertiesWindow* properties)
+		: uiWindow("File Explorer"), m_RootPath(rootPath), m_Properties(properties)
 	{
 		m_LineHeight = TextRenderer::GetFontSize() * 1.5f;
 		SetSize(0, 110, 250, 600);
@@ -169,30 +169,6 @@ namespace PulseCode {
 					{
 						std::function<bool(FileNode&)> findAndToggle = [&](FileNode& n) -> bool
 							{
-							if (&n == clickedNode)
-							{
-								n.expanded = !n.expanded;
-								if (n.expanded && n.children.empty()) 
-								{
-									PopulateNode(n, n.path);
-								}
-								return true;
-							}
-							for (auto& child : n.children)
-							{
-								if (findAndToggle(child)) return true;
-							}
-							return false;
-							};
-						findAndToggle(m_RootNode);
-						return true;
-					}
-					else
-					{
-						if (m_LastClickedNode == clickedNode && (currentTime - m_LastClickTime) < 0.5f)
-						{
-							std::function<bool(FileNode&)> findAndToggle = [&](FileNode& n) -> bool
-								{
 								if (&n == clickedNode)
 								{
 									n.expanded = !n.expanded;
@@ -207,6 +183,30 @@ namespace PulseCode {
 									if (findAndToggle(child)) return true;
 								}
 								return false;
+							};
+						findAndToggle(m_RootNode);
+						return true;
+					}
+					else
+					{
+						if (m_LastClickedNode == clickedNode && (currentTime - m_LastClickTime) < 0.5f)
+						{
+							std::function<bool(FileNode&)> findAndToggle = [&](FileNode& n) -> bool
+								{
+									if (&n == clickedNode)
+									{
+										n.expanded = !n.expanded;
+										if (n.expanded && n.children.empty())
+										{
+											PopulateNode(n, n.path);
+										}
+										return true;
+									}
+									for (auto& child : n.children)
+									{
+										if (findAndToggle(child)) return true;
+									}
+									return false;
 								};
 							findAndToggle(m_RootNode);
 							m_LastClickedNode = nullptr;
@@ -217,6 +217,22 @@ namespace PulseCode {
 						{
 							m_LastClickedNode = clickedNode;
 							m_LastClickTime = currentTime;
+
+							m_VisibleNodes.clear();
+							float yOffset = 0.0f;
+							BuildVisibleList(m_RootNode, 0, contentY, yOffset);
+							m_SelectNode = nullptr;
+							for (const auto& vn : m_VisibleNodes)
+							{
+								float yPos = vn.y;
+								if (my >= yPos && my <= yPos + m_LineHeight)
+								{
+									m_SelectNode = vn.node;
+									break;
+								}
+							}
+							if (m_Properties)
+								m_Properties->SetFileProperties(m_SelectNode->path);
 							return true;
 						}
 					}
@@ -238,6 +254,22 @@ namespace PulseCode {
 					{
 						m_LastClickedNode = clickedNode;
 						m_LastClickTime = currentTime;
+
+						m_VisibleNodes.clear();
+						float yOffset = 0.0f;
+						BuildVisibleList(m_RootNode, 0, contentY, yOffset);
+						m_SelectNode = nullptr;
+						for (const auto& vn : m_VisibleNodes)
+						{
+							float yPos = vn.y;
+							if (my >= yPos && my <= yPos + m_LineHeight)
+							{
+								m_SelectNode = vn.node;
+								break;
+							}
+						}
+						if (m_Properties)
+							m_Properties->SetFileProperties(m_SelectNode->path);
 						return true;
 					}
 				}
@@ -376,7 +408,22 @@ namespace PulseCode {
 
 		if (&node == m_HoveredNode)
 		{
-			glColor4f(0.5f, 0.5f, 0.5f, 0.5f);
+			if (ThemeManager::IsDarkTheme())
+				glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
+			else
+				glColor4f(0.8f, 0.8f, 0.8f, 0.5f);
+
+			glBegin(GL_QUADS);
+			glVertex2f(x, y);
+			glVertex2f(x + width, y);
+			glVertex2f(x + width, y + m_LineHeight);
+			glVertex2f(x, y + m_LineHeight);
+			glEnd();
+		}
+
+		if (&node == m_SelectNode)
+		{
+			glColor4f(0.5f, 0.5f, 0.5f, 1.0f);
 			glBegin(GL_QUADS);
 			glVertex2f(x, y);
 			glVertex2f(x + width, y);

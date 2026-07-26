@@ -16,7 +16,9 @@ namespace PulseCode {
 		return instance;
 	}
 
-	uiLayer::uiLayer() : Layer("UILayer") {}
+	uiLayer::uiLayer() : Layer("UILayer")
+	{
+	}
 
 	uiLayer::~uiLayer() 
 	{
@@ -87,7 +89,8 @@ namespace PulseCode {
 
 		codeEditor = new CodeEditor("untitled.cpp");
 
-		auto* fileExplorer = new FileExplorer("H:/Projects/CppProject/PulseCode-Studio");
+		auto* properties = new PropertiesWindow();
+		auto* fileExplorer = new FileExplorer("H:/Projects/CppProject/PulseCode-Studio", properties);
 		fileExplorer->SetFileOpenCallback([this](const std::string& path)
 			{
 				if (this->m_TabManager)
@@ -100,9 +103,7 @@ namespace PulseCode {
 				}
 			});
 		auto* output = new uiWindow("Output");
-		auto* properties = new uiWindow("Properties");
 		auto* notifications = new uiWindow("Notifications");
-		auto* errorlist = new uiWindow("Error List");
 		m_Windows.push_back(fileExplorer);
 		m_Windows.push_back(output);
 		m_Windows.push_back(properties);

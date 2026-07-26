@@ -3,18 +3,22 @@
     "WindowWidth": 1720,
     "channelIndex": 1,
     "fontSize": 20,
-    "openFiles": [],
+    "openFiles": [
+        "H:/Projects/CppProject/PulseCode-Studio/Github repo.url",
+        "H:/Projects/CppProject/PulseCode-Studio/Makefile",
+        "H:/Projects/CppProject/PulseCode-Studio/Build.lua"
+    ],
     "recentFiles": [
+        "H:/Projects/CppProject/PulseCode-Studio/Build.lua",
+        "H:/Projects/CppProject/PulseCode-Studio/Makefile",
+        "H:/Projects/CppProject/PulseCode-Studio/Github repo.url",
         "H:/Projects/CppProject/PulseCode-Studio/.gitmodules",
         "H:/Projects/CppProject/PulseCode-Studio/PulseCode-Studio IDE.sln",
         "H:/Projects/CppProject/PulseCode-Studio/README-zh.md",
         "H:/Projects/CppProject/PulseCode-Studio/README.md",
-        "H:/Projects/CppProject/PulseCode-Studio/Github repo.url",
         "H:/Projects/CppProject/PulseCode-Studio/LICENSE",
         "",
         "H:/Projects/CppProject/PulseCode-Studio/Core/Core.vcxproj",
-        "H:/Projects/CppProject/PulseCode-Studio/Makefile",
-        "H:/Projects/CppProject/PulseCode-Studio/Build.lua",
         "H:/Projects/CppProject/PulseCode-Studio/Binaries/windows-x86_64-Debug/config/config.json",
         "H:/Projects/CppProject/PulseCode-Studio/Binaries/windows-x86_64-Debug/App.exe",
         "H:/Projects/CppProject/PulseCode-Studio/.gitignore"

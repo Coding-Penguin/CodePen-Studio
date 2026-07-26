@@ -98,12 +98,13 @@ namespace PulseCode {
 		static float GetCenterY() { return s_CenterY; }
 		static float GetCenterW() { return s_CenterW; }
 		static float GetCenterH() { return s_CenterH; }
-	private:
-		std::string m_name = "uiWindow";
+	public:
 		float m_RectX = 100.0f;
 		float m_RectY = 150.0f;
 		float m_RectWidth = 500.0f;
 		float m_RectHeight = 700.0f;
+	private:
+		std::string m_name = "uiWindow";
 		float m_Color[4] = {};
 
 		bool m_IsResizing = false;

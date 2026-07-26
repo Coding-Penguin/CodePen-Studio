@@ -6,7 +6,7 @@
 # PulseCode-Studio · 脉冲光
 <strong> An open-source IDE with native runtime based on C++/OpenGL. </strong>
 
-<em>Chinese name: <strong>脉冲光</strong> (official Chinese branding). The repository and package name remain <code>PulseCode-Studio</code>.</em>
+<em>Chinese name: <strong>脉冲光</strong> (official Chinese branding). The repository name remain <code>PulseCode-Studio</code>.</em>
 </div>
 <div align = "center">
 

@@ -91,43 +91,33 @@ namespace PulseCode {
 		}
 	}
 	
-	static bool SetGLFWColor()
+	static void SetGLFWColor()
 	{
-		if (ThemeManager::GetCurrentTheme() == Theme::Dark)
+		switch (ThemeManager::GetCurrentTheme())
 		{
+		case Theme::Dark:
 			glClearColor(0.01f, 0.01f, 0.05f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			return true;
-		}
-		else if (ThemeManager::GetCurrentTheme() == Theme::Light)
-		{
+			break;
+		case Theme::Light:
 			glClearColor(0.95f, 0.95f, 1.0f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			return true;
-		}
-		else if (ThemeManager::GetCurrentTheme() == Theme::Cool_Breeze)
-		{
+			break;
+		case Theme::Cool_Breeze:
 			glClearColor(0.8f, 0.9f, 0.95f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			return true;
-		}
-		else if (ThemeManager::GetCurrentTheme() == Theme::Cool_Slate)
-		{
+			break;
+		case Theme::Cool_Slate:
 			glClearColor(0.110f, 0.208f, 0.306f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			return true;
-		}
-		else if (ThemeManager::GetCurrentTheme() == Theme::Icy_Mint)
-		{
+			break;
+		case Theme::Icy_Mint:
 			glClearColor(0.8f, 0.9f, 0.85f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			return true;
-		}
-		else if (ThemeManager::GetCurrentTheme() == Theme::Moonlight)
-		{
+			break;
+		case Theme::Moonlight:
 			glClearColor(0.05f, 0.1f, 0.17f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			return true;
 		}
 	}
 

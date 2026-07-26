@@ -6,7 +6,7 @@
 # PulseCode-Studio · 脉冲光
 <strong> 以 C++ / OpenGL 为原生运行时的开源集成开发环境。 </strong>
 </div>
-<div align="center"><em>「脉冲光」为本IDE中文名；工程与包名仍使用 <code>PulseCode-Studio</code>。</em></div>
+<div align="center"><em>「脉冲光」为本IDE中文名；工程名仍使用 <code>PulseCode-Studio</code>。</em></div>
 <div align = "center">
 
 [English](./README.md)

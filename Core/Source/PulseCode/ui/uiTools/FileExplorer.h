@@ -2,6 +2,7 @@
 #include "pspch.h"
 #include "uiWindow.h"
 #include "PhotoRenderer.h"
+#include "PropertiesWindow.h"
 
 namespace PulseCode {
 
@@ -31,7 +32,7 @@ namespace PulseCode {
 	class FileExplorer : public uiWindow
 	{
 	public:
-		FileExplorer(const std::string& rootPath);
+		FileExplorer(const std::string& rootPath, PropertiesWindow* properties);
 		virtual ~FileExplorer();
 
 		virtual void OnUpdate(float deltaTime) override;
@@ -58,7 +59,10 @@ namespace PulseCode {
 		float m_DragStartY = 0.0f;
 		float m_DragStartScrollY = 0.0f;
 
+		PropertiesWindow* m_Properties;
+
 		const FileNode* m_HoveredNode = nullptr;
+		const FileNode* m_SelectNode = nullptr;
 
 		float m_LastClickTime = 0.0f;
 		const FileNode* m_LastClickedNode = nullptr;

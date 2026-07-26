@@ -3,6 +3,7 @@
 #include "uiTools/uiStatusBar.h"
 #include "uiTools/uiShortcutBar.h"
 #include "CodeEditor/EditorTabManager.h"
+#include "uiTools/PropertiesWindow.h"
 #include <vector>
 
 namespace PulseCode {
@@ -32,7 +33,6 @@ namespace PulseCode {
 		static bool IsPointOverAnyWindow(float x, float y);
 
 		OutputWindow* GetOutputWindow() const { return m_OutputWindow; }
-
 		EditorTabManager* GetTabManager() const { return m_TabManager; }
 	private:
 		std::vector<uiWindow*> m_Windows;
