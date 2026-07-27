@@ -1,9 +1,9 @@
-#include <Pulse.h>
+#include <Code.h>
 #include <iostream>
 
-#include "PulseCode/Events/KeyEvent.h"
+#include "CodePen/Events/KeyEvent.h"
 
-class ExampleLayer : public PulseCode::Layer
+class ExampleLayer : public CodePen::Layer
 {
 public:
 	ExampleLayer()
@@ -15,33 +15,33 @@ public:
 	{
 	}
 
-	bool OnEvent(PulseCode::Event& event) override
+	bool OnEvent(CodePen::Event& event) override
 	{
 		return false;
 	}
 };
 
-class SandboxApp : public PulseCode::Application
+class SandboxApp : public CodePen::Application
 {
 public:
 	SandboxApp()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new PulseCode::uiLayer());
+		PushOverlay(new CodePen::uiLayer());
 	}
 	~SandboxApp()
 	{
 	}
 };
 
-PulseCode::Application* PulseCode::CreateApplication()
+CodePen::Application* CodePen::CreateApplication()
 {
 	return new SandboxApp();
 }
 
 int main()
 {
-	PulseCode::Application* app = PulseCode::CreateApplication();
+	CodePen::Application* app = CodePen::CreateApplication();
 
 	app->Run();
 

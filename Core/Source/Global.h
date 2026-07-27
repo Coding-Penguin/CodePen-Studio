@@ -1,6 +1,6 @@
 #pragma once
 
-namespace PulseCode {
+namespace CodePen {
 
 	static bool s_FontLoaded = false;
 

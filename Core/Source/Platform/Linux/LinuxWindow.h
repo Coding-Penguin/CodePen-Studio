@@ -1,9 +1,9 @@
 #pragma once
-#include "PulseCode/Window.h"
+#include "CodePen/Window.h"
 
 struct GLFWwindow;
 
-namespace PulseCode {
+namespace CodePen {
 
 	class LinuxWindow : public Window
 	{

@@ -1,4 +1,4 @@
-workspace "PulseCode-Studio IDE"
+workspace "CodePen-Studio IDE"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
    startproject "App"

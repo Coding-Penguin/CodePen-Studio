@@ -1,9 +1,9 @@
 #include "pspch.h"
 #include "LinuxInput.h"
 #include <GLFW/glfw3.h>
-#include "PulseCode/Application.h"
+#include "CodePen/Application.h"
 
-namespace PulseCode {
+namespace CodePen {
 
 	bool LinuxInput::IsKeyPressedImpl(int keycode)
 	{

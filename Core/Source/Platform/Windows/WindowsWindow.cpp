@@ -9,19 +9,19 @@
 #include <GLFW/glfw3native.h> 
 #include <glad/glad.h>
 
-#include "PulseCode/Log.h"
+#include "CodePen/Log.h"
 
-#include "PulseCode/Events/ApplicationEvent.h"
-#include "PulseCode/Events/KeyEvent.h"
-#include "PulseCode/Events/MouseEvent.h"
+#include "CodePen/Events/ApplicationEvent.h"
+#include "CodePen/Events/KeyEvent.h"
+#include "CodePen/Events/MouseEvent.h"
 
-#include "PulseCode/ui/uiLayer.h"
+#include "CodePen/ui/uiLayer.h"
 
-#include "PulseCode/Application.h"
+#include "CodePen/Application.h"
 
 #include <stb_image.h>
 
-namespace PulseCode {
+namespace CodePen {
 
 	static bool s_GLFWInitialized = false;
 
@@ -397,11 +397,11 @@ namespace PulseCode {
 
 		if (ThemeManager::IsDarkTheme())
 		{
-			iconPath = "H:/Projects/CppProject/PulseCode-Studio/Core/Resources/Images/PulseCodeStudio_White.png";
+			iconPath = "H:/Projects/CppProject/CodePen-Studio/Core/Resources/Images/CodePenStudio_White.png";
 		}
 		else
 		{
-			iconPath = "H:/Projects/CppProject/PulseCode-Studio/Core/Resources/Images/PulseCodeStudio_Black.png";
+			iconPath = "H:/Projects/CppProject/CodePen-Studio/Core/Resources/Images/CodePenStudio_Black.png";
 		}
 
 		unsigned char* data = stbi_load(iconPath.c_str(), &width, &height, &channels, 4);

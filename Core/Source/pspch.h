@@ -27,16 +27,16 @@
 #include <codecvt>
 #include <locale>
 
-#include "PulseCode/Core.h"
-#include "PulseCode/Log.h"
-#include "PulseCode/Theme.h"
-#include "PulseCode/Channel.h"
+#include "CodePen/Core.h"
+#include "CodePen/Log.h"
+#include "CodePen/Theme.h"
+#include "CodePen/Channel.h"
 
-#include "PulseCode/KeyCodes.h"
-#include "PulseCode/MouseButtonCodes.h"
+#include "CodePen/KeyCodes.h"
+#include "CodePen/MouseButtonCodes.h"
 
 #include "Global.h"
-#include "PulseCode/SettingsManager.h"
+#include "CodePen/SettingsManager.h"
 
 #ifdef PS_PLATFORM_WINDOWS
 #include <Windows.h>

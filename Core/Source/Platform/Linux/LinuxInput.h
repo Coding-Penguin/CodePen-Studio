@@ -1,7 +1,7 @@
 #pragma once
-#include "PulseCode/Input.h"
+#include "CodePen/Input.h"
 
-namespace PulseCode {
+namespace CodePen {
 
 	class LinuxInput : public Input
 	{
