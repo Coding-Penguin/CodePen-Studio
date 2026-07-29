@@ -12,7 +12,7 @@ namespace CodePen {
 	FileExplorer::FileExplorer(const std::string& rootPath, PropertiesWindow* properties)
 		: uiWindow("File Explorer"), m_RootPath(rootPath), m_Properties(properties)
 	{
-		m_LineHeight = TextRenderer::GetFontSize() * 1.5f;
+		m_LineHeight = s_FontSize * 1.5f;
 		SetSize(0, 110, 250, 600);
 		RefreshTree();
 
@@ -23,11 +23,11 @@ namespace CodePen {
 		m_CPP_File_Icon.reset(new PhotoRenderer());
 		m_Python_File_Icon.reset(new PhotoRenderer());
 
-		m_Folder_Close_Icon->LoadFromFile("H:/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Folder_Close.png");
-		m_Folder_Open_Icon->LoadFromFile("H:/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Folder_Open.png");
-		m_CPP_File_Icon->LoadFromFile("H:/Projects/CppProject/CodePen-Studio/Core/Resources/Images/CPP_File.png");
-		m_Python_File_Icon->LoadFromFile("H:/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Python_File.png");
-		m_File_Icon->LoadFromFile("H:/Projects/CppProject/CodePen-Studio/Core/Resources/Images/File.png");
+		m_Folder_Close_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Folder_Close.png");
+		m_Folder_Open_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Folder_Open.png");
+		m_CPP_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/CPP_File.png");
+		m_Python_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Python_File.png");
+		m_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/File.png");
 	}
 
 	FileExplorer::~FileExplorer()
@@ -95,7 +95,6 @@ namespace CodePen {
 		if (!IsVisible()) return false;
 
 		if (uiWindow::OnEvent(event)) return true;
-
 		EventDispatcher dispatcher(event);
 
 		dispatcher.Dispatch<MouseScrolledEvent>([this](MouseScrolledEvent& e)
@@ -108,11 +107,8 @@ namespace CodePen {
 				float contentW = GetWidth();
 				float contentH = GetHeight() - 30;
 
-				if (!(mx >= contentX && mx <= contentX + contentW &&
-					my >= contentY && my <= contentY + contentH))
-				{
+				if (!(mx >= contentX && mx <= contentX + contentW && my >= contentY && my <= contentY + contentH))
 					return false;
-				}
 
 				float maxScroll = std::max(0.0f, m_TotalHeight - contentH);
 				if (maxScroll <= 0) return false;
@@ -222,6 +218,7 @@ namespace CodePen {
 							float yOffset = 0.0f;
 							BuildVisibleList(m_RootNode, 0, contentY, yOffset);
 							m_SelectNode = nullptr;
+							
 							for (const auto& vn : m_VisibleNodes)
 							{
 								float yPos = vn.y;
@@ -231,8 +228,10 @@ namespace CodePen {
 									break;
 								}
 							}
+							
 							if (m_Properties)
 								m_Properties->SetFileProperties(m_SelectNode->path);
+
 							return true;
 						}
 					}
@@ -259,6 +258,7 @@ namespace CodePen {
 						float yOffset = 0.0f;
 						BuildVisibleList(m_RootNode, 0, contentY, yOffset);
 						m_SelectNode = nullptr;
+						
 						for (const auto& vn : m_VisibleNodes)
 						{
 							float yPos = vn.y;
@@ -268,8 +268,10 @@ namespace CodePen {
 								break;
 							}
 						}
+						
 						if (m_Properties)
 							m_Properties->SetFileProperties(m_SelectNode->path);
+						
 						return true;
 					}
 				}
@@ -331,6 +333,49 @@ namespace CodePen {
 				}
 				return false;
 			});
+
+		dispatcher.Dispatch<KeyPressedEvent>([this](KeyPressedEvent& e)
+			{
+				if (e.GetKeyCode() == PS_KEY_F2)
+				{
+					if (!m_SelectNode) return false;
+					Rename(m_SelectNode);
+				}
+
+				if (e.GetKeyCode() == PS_KEY_ENTER)
+				{
+					if (!m_SelectNode) return false;
+					if (m_SelectNode->isFolder)
+					{
+						std::function<bool(FileNode&)> findAndToggle = [&](FileNode& n) -> bool
+							{
+								if (&n == m_SelectNode)
+								{
+									n.expanded = !n.expanded;
+									if (n.expanded && n.children.empty())
+									{
+										PopulateNode(n, n.path);
+									}
+									return true;
+								}
+								for (auto& child : n.children)
+								{
+									if (findAndToggle(child)) return true;
+								}
+								return false;
+							};
+						findAndToggle(m_RootNode);
+					}
+					else
+					{
+						if (m_FileOpenCallback)
+						{
+							m_FileOpenCallback(m_SelectNode->path);
+						}
+					}
+				}
+			}
+		);
 
 		return false;
 	}
@@ -548,6 +593,11 @@ namespace CodePen {
 			else if (ext == "lua") return Filetype::Lua;
 		}
 		return Filetype::Unknown;
+	}
+
+	void FileExplorer::Rename(const FileNode* node)
+	{
+		if (!node) return;
 	}
 
 }

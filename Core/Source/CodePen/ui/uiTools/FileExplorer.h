@@ -59,7 +59,7 @@ namespace CodePen {
 		float m_DragStartY = 0.0f;
 		float m_DragStartScrollY = 0.0f;
 
-		PropertiesWindow* m_Properties;
+		PropertiesWindow* m_Properties = nullptr;
 
 		const FileNode* m_HoveredNode = nullptr;
 		const FileNode* m_SelectNode = nullptr;
@@ -93,6 +93,8 @@ namespace CodePen {
 		};
 		mutable std::vector<VisibleNode> m_VisibleNodes;
 		void BuildVisibleList(const FileNode& node, int depth, float startY, float& yOffset) const;
+
+		void Rename(const FileNode* node);
 	};
 
 }

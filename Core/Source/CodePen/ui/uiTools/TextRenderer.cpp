@@ -51,15 +51,15 @@ namespace CodePen {
 		m_FontSize = fontSize;
 		float scale = stbtt_ScaleForPixelHeight(&info, fontSize);
 
-		const int atlasW = 2048, atlasH = 2048;
+		const unsigned int atlasW = 16384, atlasH = 16384;
 		unsigned char* texData = new unsigned char[atlasW * atlasH];
-		memset(texData, 0, atlasW * atlasH);
+		memset(texData, 0, static_cast<size_t>(atlasW) * static_cast<size_t>(atlasH));
 
 		stbtt_bakedchar bakedChars[95];
 		int result = stbtt_BakeFontBitmap(buffer.data(), 0, fontSize, texData, atlasW, atlasH, 32, 95, bakedChars);
 		if (result == 0)
 		{
-			PS_CORE_ERROR("Failed to bake font bitmap");
+			PS_CORE_ERROR("Failed to bake font bitmap!");
 			delete[] texData;
 			return false;
 		}

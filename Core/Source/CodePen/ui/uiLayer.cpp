@@ -25,10 +25,10 @@ namespace CodePen {
 		for (auto* win : m_Windows)
 			delete win;
 		m_Windows.clear();
-		delete titleBar;
+		delete m_TitleBar;
 		delete m_StatusBar;
 		delete m_ShortcutBar;
-		delete codeEditor;
+		delete m_CodeEditor;
 	}
 
 	void uiLayer::OnAttach()
@@ -41,11 +41,13 @@ namespace CodePen {
 
 		auto& settings = SettingsManager::Get().GetSettings();
 
+		m_CodeEditor = new CodeEditor("");
+
 		m_StatusBar = new uiStatusBar();
 		m_StatusBar->OnAttach();
 
-		titleBar = new uiTitleBar();
-		titleBar->OnAttach();
+		m_TitleBar = new uiTitleBar();
+		m_TitleBar->OnAttach();
 
 		m_ShortcutBar = new uiShortcutBar();
 		m_ShortcutBar->OnAttach();
@@ -67,7 +69,7 @@ namespace CodePen {
 		std::vector<ShortcutItem> buildGroup =
 		{
 			{ "debug", "D", "Debug", []() { PS_INFO("Debug"); } },
-			{ "build", "B", "Build", [this]() { PS_INFO("Start Build."); } },
+			{ "build", "B", "Build", []() { PS_INFO("Start Build."); } },
 			{ "rebuild", "RB", "Rebuild", []() { PS_INFO("Start Rebuild"); } },
 			{ "clean", "Cl", "Clean", []() { PS_INFO("Clean"); } },
 			{ "run", "R", "Run", []() { PS_INFO("Run"); } }
@@ -87,10 +89,8 @@ namespace CodePen {
 
 		uiWindow::InitDockSystem(0.0f, 110.0f, width, height - 150.0f);
 
-		codeEditor = new CodeEditor("untitled.cpp");
-
 		auto* properties = new PropertiesWindow();
-		auto* fileExplorer = new FileExplorer("H:/Projects/CppProject/CodePen-Studio", properties);
+		auto* fileExplorer = new FileExplorer("H:/Programming/Projects/CppProject/CodePen-Studio", properties);
 		fileExplorer->SetFileOpenCallback([this](const std::string& path)
 			{
 				if (this->m_TabManager)
@@ -133,10 +133,10 @@ namespace CodePen {
 	{
 		for (auto* win : m_Windows)
 			win->OnDetach();
-		if (titleBar) titleBar->OnDetach();
+		if (m_TitleBar) m_TitleBar->OnDetach();
 		if (m_StatusBar) m_StatusBar->OnDetach();
 		if (m_ShortcutBar) m_ShortcutBar->OnDetach();
-		delete codeEditor;
+		delete m_CodeEditor;
 	}
 
 	void uiLayer::OnUpdate(float deltaTime)
@@ -216,7 +216,7 @@ namespace CodePen {
 			glEnd();
 		}
 
-		if (titleBar) titleBar->OnUpdate(deltaTime);
+		if (m_TitleBar) m_TitleBar->OnUpdate(deltaTime);
 
 		if (m_ShortcutBar)
 		{
@@ -224,10 +224,10 @@ namespace CodePen {
 			m_ShortcutBar->Draw();
 		}
 
-		if (codeEditor)
+		if (m_CodeEditor)
 		{
-			codeEditor->SetViewBounds(centerX, centerY + 30, centerW, centerH - 30);
-			codeEditor->OnUpdate(deltaTime);
+			m_CodeEditor->SetViewBounds(centerX, centerY + 30, centerW, centerH - 30);
+			m_CodeEditor->OnUpdate(deltaTime);
 		}
 
 		if (m_TabManager)
@@ -253,19 +253,19 @@ namespace CodePen {
 		if (m_TabManager && m_TabManager->OnEvent(event))
 			return true;
 
-		if (titleBar && titleBar->OnEvent(event))
+		if (m_TitleBar && m_TitleBar->OnEvent(event))
 			return true;
-
-		for (auto it = m_Windows.rbegin(); it != m_Windows.rend(); ++it)
-		{
-			if ((*it)->OnEvent(event))
-				return true;
-		}
 
 		if (m_ShortcutBar && m_ShortcutBar->OnEvent(event))
 			return true;
 
-		if (codeEditor) return codeEditor->OnEvent(event);
+		for (auto* win : m_Windows)
+		{
+			if (win->OnEvent(event))
+				return true;
+		}
+
+		if (m_CodeEditor) return m_CodeEditor->OnEvent(event);
 
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<WindowResizeEvent>([this](WindowResizeEvent& e)

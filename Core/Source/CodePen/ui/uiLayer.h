@@ -9,7 +9,6 @@
 namespace CodePen {
 
 	class uiWindow;
-	class OutputWindow;
 	class uiTitleBar;
 	class uiButton;
 	class MouseCircle;
@@ -32,15 +31,15 @@ namespace CodePen {
 
 		static bool IsPointOverAnyWindow(float x, float y);
 
-		OutputWindow* GetOutputWindow() const { return m_OutputWindow; }
 		EditorTabManager* GetTabManager() const { return m_TabManager; }
+
+		CodeEditor* GetCodeEditor() const { return m_CodeEditor; }
 	private:
 		std::vector<uiWindow*> m_Windows;
-		uiTitleBar* titleBar = nullptr;
+		uiTitleBar* m_TitleBar = nullptr;
 		uiStatusBar* m_StatusBar = nullptr;
-		CodeEditor* codeEditor = nullptr;
+		CodeEditor* m_CodeEditor = nullptr;
 		uiShortcutBar* m_ShortcutBar = nullptr;
-		OutputWindow* m_OutputWindow = nullptr;
 		EditorTabManager* m_TabManager = nullptr;
 	};
 

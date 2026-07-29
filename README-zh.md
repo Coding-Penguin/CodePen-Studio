@@ -5,8 +5,10 @@
 
 # CodePen-Studio · 代码之笔
 <strong> 以 C++ / OpenGL 为原生运行时的开源集成开发环境。 </strong>
+
+<em>「代码之笔」为本IDE中文名；工程名仍使用 <code>CodePen-Studio</code>。</em>
 </div>
-<div align="center"><em>「代码之笔」为本IDE中文名；工程名仍使用 <code>CodePen-Studio</code>。</em></div>
+
 <div align = "center">
 
 [English](./README.md)

@@ -3,6 +3,7 @@
 namespace CodePen {
 
 	static bool s_FontLoaded = false;
+	static float s_FontSize = 20.0f;
 
 	static bool CreateFolder(const std::string& path)
 	{

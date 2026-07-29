@@ -60,7 +60,12 @@ namespace CodePen {
 	{
 		if (!IsLoaded()) return;
 
-		glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT);
+		GLboolean texWasEnabled = glIsEnabled(GL_TEXTURE_2D);
+		GLboolean blendWasEnabled = glIsEnabled(GL_BLEND);
+		GLint blendSrc, blendDst;
+		glGetIntegerv(GL_BLEND_SRC_ALPHA, &blendSrc);
+		glGetIntegerv(GL_BLEND_DST_ALPHA, &blendDst);
+
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -68,15 +73,29 @@ namespace CodePen {
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(x, y);
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(x + width, y);
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(x + width, y + height);
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(x, y + height);
-		glEnd();
+		float verts[] =
+		{
+			// x,		y,			s,		t
+			x,			y,			0.0f,	1.0f,
+			x + width,	y,			1.0f,	1.0f,
+			x + width,	y + height,	1.0f,	0.0f,
+			x,			y + height,	0.0f,	0.0f
+		};
 
-		glDisable(GL_TEXTURE_2D);
-		glPopAttrib();
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		glVertexPointer(2, GL_FLOAT, 4 * sizeof(float), verts);
+		glTexCoordPointer(2, GL_FLOAT, 4 * sizeof(float), verts + 2);
+
+		glDrawArrays(GL_QUADS, 0, 4);
+
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		if (!texWasEnabled) glDisable(GL_TEXTURE_2D);
+		if (!blendWasEnabled) glDisable(GL_BLEND);
+		glBlendFunc(blendSrc, blendDst);
 	}
 
 }

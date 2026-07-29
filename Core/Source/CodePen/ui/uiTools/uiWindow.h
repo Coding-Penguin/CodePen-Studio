@@ -176,7 +176,6 @@ namespace CodePen {
 		static float s_BottomHeight;
 
 		static float s_DockSpacing, s_CenterX, s_CenterY, s_CenterW, s_CenterH;
-
 		static DockRegion DetectDockTarget(float mx, float my);
 		static void UndockWindow(uiWindow* window);
 		static void ToggleAutoHide(uiWindow* window);

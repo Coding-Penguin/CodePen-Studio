@@ -345,7 +345,6 @@ namespace CodePen {
 		OnDockEvent(event);
 
 		EventDispatcher dispatcher(event);
-
 		dispatcher.Dispatch<WindowResizeEvent>([this](WindowResizeEvent& e) -> bool
 			{
 				s_MainW = (float)e.GetWidth();
