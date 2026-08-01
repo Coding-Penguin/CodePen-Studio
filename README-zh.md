@@ -1,5 +1,11 @@
 <div align = "center">
-<img src = "./Core/Resources/Images/CodePenStudio_White.png" alt = "图标" style = "width: 20%; height: auto;">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./Core/Resources/Images/CodePenStudio_White.png" style = "width: 20%; height: auto;">
+  <source media="(prefers-color-scheme: light)" srcset="./Core/Resources/Images/CodePenStudio_Black.png" style = "width: 20%; height: auto;">
+  <img alt="图标" src="./Core/Resources/Images/CodePenStudio_White.png" style = "width: 20%; height: auto;">
+</picture>
+
 </div>
 <div align = "center">
 

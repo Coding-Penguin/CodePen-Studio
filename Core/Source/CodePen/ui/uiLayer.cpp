@@ -90,7 +90,7 @@ namespace CodePen {
 		uiWindow::InitDockSystem(0.0f, 110.0f, width, height - 150.0f);
 
 		auto* properties = new PropertiesWindow();
-		auto* fileExplorer = new FileExplorer("H:/Programming/Projects/CppProject/CodePen-Studio", properties);
+		auto* fileExplorer = new FileExplorer(s_RootPath, properties);
 		fileExplorer->SetFileOpenCallback([this](const std::string& path)
 			{
 				if (this->m_TabManager)

@@ -159,6 +159,7 @@ namespace CodePen {
 	{
 		PS_WARN("Window close event received. Shutting down Application...");
 		m_Running = false;
+		SettingsManager::Get().Save();
 		return true;
 	}
 

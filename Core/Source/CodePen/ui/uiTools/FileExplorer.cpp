@@ -15,6 +15,7 @@ namespace CodePen {
 		m_LineHeight = s_FontSize * 1.5f;
 		SetSize(0, 110, 250, 600);
 		RefreshTree();
+		LoadState();
 
 		// Load Icons
 		m_Folder_Close_Icon.reset(new PhotoRenderer());
@@ -117,6 +118,8 @@ namespace CodePen {
 				if (m_ScrollY < 0) m_ScrollY = 0;
 				if (m_ScrollY > maxScroll) m_ScrollY = maxScroll;
 
+				SaveState();
+
 				return true;
 			});
 
@@ -181,6 +184,7 @@ namespace CodePen {
 								return false;
 							};
 						findAndToggle(m_RootNode);
+						SaveState();
 						return true;
 					}
 					else
@@ -207,6 +211,7 @@ namespace CodePen {
 							findAndToggle(m_RootNode);
 							m_LastClickedNode = nullptr;
 							m_LastClickTime = 0.0f;
+							SaveState();
 							return true;
 						}
 						else
@@ -232,6 +237,7 @@ namespace CodePen {
 							if (m_Properties)
 								m_Properties->SetFileProperties(m_SelectNode->path);
 
+							SaveState();
 							return true;
 						}
 					}
@@ -247,6 +253,7 @@ namespace CodePen {
 
 						m_LastClickedNode = nullptr;
 						m_LastClickTime = 0.0f;
+						SaveState();
 						return true;
 					}
 					else
@@ -271,6 +278,7 @@ namespace CodePen {
 						
 						if (m_Properties)
 							m_Properties->SetFileProperties(m_SelectNode->path);
+						SaveState();
 						
 						return true;
 					}
@@ -598,6 +606,51 @@ namespace CodePen {
 	void FileExplorer::Rename(const FileNode* node)
 	{
 		if (!node) return;
+	}
+
+	void FileExplorer::LoadState()
+	{
+		std::unordered_map<std::string, bool> expandedState;
+		float scrollY = 0.0f;
+		SettingsManager::Get().LoadFileExplorerState(scrollY, expandedState);
+		m_ScrollY = scrollY;
+
+		std::function<void(FileNode&)> setState = [&](FileNode& n)
+			{
+			auto it = expandedState.find(n.path);
+			if (it != expandedState.end())
+			{
+				n.expanded = it->second;
+				if (n.expanded && n.children.empty() && n.isFolder)
+				{
+					PopulateNode(n, n.path);
+				}
+			}
+			for (auto& child : n.children)
+			{
+				setState(child);
+			}
+			};
+		setState(m_RootNode);
+	}
+
+	void FileExplorer::SaveState()
+	{
+		std::unordered_map<std::string, bool> expandedState;
+		std::function<void(const FileNode&)> collectExpanded = [&](const FileNode& n)
+			{
+			if (n.expanded)
+			{
+				expandedState[n.path] = true;
+			}
+			for (const auto& child : n.children)
+			{
+				collectExpanded(child);
+			}
+			};
+		collectExpanded(m_RootNode);
+
+		SettingsManager::Get().SaveFileExplorerState(m_ScrollY, expandedState);
 	}
 
 }

@@ -49,7 +49,7 @@ namespace CodePen {
 		}
 
 		m_FontSize = fontSize;
-		float scale = stbtt_ScaleForPixelHeight(&info, fontSize);
+		float scale = stbtt_ScaleForPixelHeight(&info, 72.0f);
 
 		const unsigned int atlasW = 16384, atlasH = 16384;
 		unsigned char* texData = new unsigned char[atlasW * atlasH];

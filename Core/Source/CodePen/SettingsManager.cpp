@@ -27,12 +27,14 @@ namespace CodePen {
 			nlohmann::json j;
 			file >> j;
 			m_Settings.themeIndex = j.value("themeIndex", 3);
-			m_Settings.channelIndex = j.value("channelIndex", 0);
+			m_Settings.channelIndex = j.value("channelIndex", 1);
 			m_Settings.fontSize = j.value("fontSize", 20);
 			m_Settings.recentFiles = j.value("recentFiles", std::vector<std::string>{});
 			m_Settings.openFiles = j.value("openFiles", std::vector<std::string>{});
 			m_Settings.WindowWidth = j.value("WindowWidth", 1720);
 			m_Settings.WindowHeight = j.value("WindowHeight", 1000);
+			m_Settings.fileExplorerExpandedState = j["fileExplorerExpandedState"].get<std::unordered_map<std::string, bool>>();
+			m_Settings.fileExplorerScrollY = j.value("fileExplorerScrollY", 0.0f);
 		}
 		catch (const std::exception& e)
 		{
@@ -51,6 +53,8 @@ namespace CodePen {
 		j["openFiles"] = m_Settings.openFiles;
 		j["WindowWidth"] = m_Settings.WindowWidth;
 		j["WindowHeight"] = m_Settings.WindowHeight;
+		j["fileExplorerExpandedState"] = m_Settings.fileExplorerExpandedState;
+		j["fileExplorerScrollY"] = m_Settings.fileExplorerScrollY;
 
 		std::ofstream file("config/config.json");
 		if (!file)
@@ -105,6 +109,19 @@ namespace CodePen {
 		m_Settings.WindowWidth = width;
 		m_Settings.WindowHeight = height;
 		Save();
+	}
+
+	void SettingsManager::SaveFileExplorerState(float scrollY, const std::unordered_map<std::string, bool>& expandedState)
+	{
+		m_Settings.fileExplorerScrollY = scrollY;
+		m_Settings.fileExplorerExpandedState = expandedState;
+		Save();
+	}
+
+	void SettingsManager::LoadFileExplorerState(float& scrollY, std::unordered_map<std::string, bool>& expandedState)
+	{
+		scrollY = m_Settings.fileExplorerScrollY;
+		expandedState = m_Settings.fileExplorerExpandedState;
 	}
 
 }

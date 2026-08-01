@@ -42,6 +42,9 @@ namespace CodePen {
 		void SetFileOpenCallback(std::function<void(const std::string& path)> callback);
 
 		Filetype GetFileExtension(const std::string& path) const;
+
+		void LoadState();
+		void SaveState();
 	private:
 		std::string m_RootPath;
 		FileNode m_RootNode;
@@ -66,6 +69,8 @@ namespace CodePen {
 
 		float m_LastClickTime = 0.0f;
 		const FileNode* m_LastClickedNode = nullptr;
+
+		float m_ContentX = 0.0f, m_ContentY = 0.0f, m_ContentW = 0.0f, m_ContentH = 0.0f;
 
 		std::unique_ptr<PhotoRenderer> m_Folder_Close_Icon;
 		std::unique_ptr<PhotoRenderer> m_Folder_Open_Icon;
