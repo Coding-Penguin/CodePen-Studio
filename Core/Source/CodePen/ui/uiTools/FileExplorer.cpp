@@ -23,6 +23,7 @@ namespace CodePen {
 		m_CPP_File_Icon.reset(new PhotoRenderer());
 		m_Header_File_Icon.reset(new PhotoRenderer());
 		m_Python_File_Icon.reset(new PhotoRenderer());
+		m_CS_File_Icon.reset(new PhotoRenderer());
 		m_File_Icon.reset(new PhotoRenderer());
 
 		m_Folder_Close_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Folder_Close.png");
@@ -33,6 +34,7 @@ namespace CodePen {
 		else
 			m_Header_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Header_File_Black.png");
 		m_Python_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Python_File.png");
+		m_CS_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/CS_File.png");
 		if (ThemeManager::IsDarkTheme())
 			m_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/File_White.png");
 		else
@@ -557,7 +559,7 @@ namespace CodePen {
 			glVertex2f(x + 5, y + 10);
 			glEnd();
 
-			m_Folder_Open_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+			m_Folder_Open_Icon->Draw(x + 20, y - 5, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
 		}
 		else
 		{
@@ -567,7 +569,7 @@ namespace CodePen {
 			glVertex2f(x + 7, y + 5);
 			glEnd();
 
-			m_Folder_Close_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+			m_Folder_Close_Icon->Draw(x + 20, y - 5, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
 		}
 	}
 
@@ -575,19 +577,23 @@ namespace CodePen {
 	{
 		if (type == Filetype::CPP)
 		{
-			m_CPP_File_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
-		}
-		else if (type == Filetype::Python)
-		{
-			m_Python_File_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+			m_CPP_File_Icon->Draw(x + 20, y - 5, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
 		}
 		else if (type == Filetype::Header)
 		{
-			m_Header_File_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+			m_Header_File_Icon->Draw(x + 20, y - 5, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+		}
+		else if (type == Filetype::Python)
+		{
+			m_Python_File_Icon->Draw(x + 20, y - 5, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+		}
+		else if (type == Filetype::CSharp)
+		{
+			m_CS_File_Icon->Draw(x + 20, y - 5, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
 		}
 		else
 		{
-			m_File_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+			m_File_Icon->Draw(x + 20, y - 5, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
 		}
 	}
 

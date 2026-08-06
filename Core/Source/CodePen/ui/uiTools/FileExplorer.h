@@ -78,6 +78,7 @@ namespace CodePen {
 		std::unique_ptr<PhotoRenderer> m_CPP_File_Icon;
 		std::unique_ptr<PhotoRenderer> m_Header_File_Icon;
 		std::unique_ptr<PhotoRenderer> m_Python_File_Icon;
+		std::unique_ptr<PhotoRenderer> m_CS_File_Icon;
 
 		void RefreshTree();
 		void PopulateNode(FileNode& node, const std::filesystem::path& path);
