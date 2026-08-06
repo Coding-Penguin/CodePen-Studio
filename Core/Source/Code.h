@@ -5,6 +5,7 @@
 #include "CodePen/LayerStack.h"
 #include "CodePen/Log.h"
 #include "CodePen/Input.h"
+#include "CodePen/Events/Event.h"
 
 // UI
 #include "CodePen/ui/uiLayer.h"

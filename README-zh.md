@@ -38,4 +38,4 @@
 
 ## 许可证
 
-CodePen-Studio 基于 Apache 协议发布，详见 `LICENSE`。
+CodePen-Studio 基于 Apache 协议发布，详见 [`LICENSE`](./LICENSE) 文件。

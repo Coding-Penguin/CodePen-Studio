@@ -37,4 +37,4 @@
 
 ## License
 
-CodePen-Studio is released under the Apache License. See `LICENSE` for details.
+CodePen-Studio is released under the Apache License. See [`LICENSE`](./LICENSE) file for details.

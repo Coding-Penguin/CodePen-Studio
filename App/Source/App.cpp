@@ -1,7 +1,4 @@
 #include <Code.h>
-#include <iostream>
-
-#include "CodePen/Events/KeyEvent.h"
 
 class ExampleLayer : public CodePen::Layer
 {

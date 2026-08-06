@@ -27,7 +27,7 @@ namespace CodePen {
 			nlohmann::json j;
 			file >> j;
 			m_Settings.themeIndex = j.value("themeIndex", 3);
-			m_Settings.channelIndex = j.value("channelIndex", 1);
+			m_Settings.channelIndex = j.value("channelIndex", 0);
 			m_Settings.fontSize = j.value("fontSize", 20);
 			m_Settings.recentFiles = j.value("recentFiles", std::vector<std::string>{});
 			m_Settings.openFiles = j.value("openFiles", std::vector<std::string>{});
@@ -73,10 +73,7 @@ namespace CodePen {
 		recent.erase(std::remove(recent.begin(), recent.end(), filepath), recent.end());
 
 		recent.insert(recent.begin(), filepath);
-		if (recent.size() > 1024)
-		{
-			recent.resize(1024);
-		}
+
 		Save();
 	}
 

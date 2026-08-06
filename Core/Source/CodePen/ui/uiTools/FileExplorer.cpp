@@ -20,15 +20,23 @@ namespace CodePen {
 		// Load Icons
 		m_Folder_Close_Icon.reset(new PhotoRenderer());
 		m_Folder_Open_Icon.reset(new PhotoRenderer());
-		m_File_Icon.reset(new PhotoRenderer());
 		m_CPP_File_Icon.reset(new PhotoRenderer());
+		m_Header_File_Icon.reset(new PhotoRenderer());
 		m_Python_File_Icon.reset(new PhotoRenderer());
+		m_File_Icon.reset(new PhotoRenderer());
 
 		m_Folder_Close_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Folder_Close.png");
 		m_Folder_Open_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Folder_Open.png");
 		m_CPP_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/CPP_File.png");
+		if (ThemeManager::IsDarkTheme())
+			m_Header_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Header_File_White.png");
+		else
+			m_Header_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Header_File_Black.png");
 		m_Python_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/Python_File.png");
-		m_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/File.png");
+		if (ThemeManager::IsDarkTheme())
+			m_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/File_White.png");
+		else
+			m_File_Icon->LoadFromFile("H:/Programming/Projects/CppProject/CodePen-Studio/Core/Resources/Images/File_Black.png");
 	}
 
 	FileExplorer::~FileExplorer()
@@ -37,6 +45,7 @@ namespace CodePen {
 		m_Folder_Open_Icon->Unload();
 		m_File_Icon->Unload();
 		m_CPP_File_Icon->Unload();
+		m_Header_File_Icon->Unload();
 		m_Python_File_Icon->Unload();
 	}
 
@@ -476,8 +485,16 @@ namespace CodePen {
 
 		if (&node == m_SelectNode)
 		{
-			glColor4f(0.5f, 0.5f, 0.5f, 1.0f);
+			glColor4f(0.5f, 0.5f, 0.5f, 0.7f);
 			glBegin(GL_QUADS);
+			glVertex2f(x, y);
+			glVertex2f(x + width, y);
+			glVertex2f(x + width, y + m_LineHeight);
+			glVertex2f(x, y + m_LineHeight);
+			glEnd();
+
+			glColor4f(0.7f, 0.7f, 0.7f, 1.0f);
+			glBegin(GL_LINE_LOOP);
 			glVertex2f(x, y);
 			glVertex2f(x + width, y);
 			glVertex2f(x + width, y + m_LineHeight);
@@ -563,6 +580,10 @@ namespace CodePen {
 		else if (type == Filetype::Python)
 		{
 			m_Python_File_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
+		}
+		else if (type == Filetype::Header)
+		{
+			m_Header_File_Icon->Draw(x + 20, y - 7, m_LineHeight * 0.7f, m_LineHeight * 0.7f);
 		}
 		else
 		{

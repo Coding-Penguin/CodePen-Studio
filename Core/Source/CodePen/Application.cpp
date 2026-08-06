@@ -152,7 +152,36 @@ namespace CodePen {
 				PS_CORE_ERROR("Main window is null!");
 				m_Running = false;
 			}
-		} while (m_Running && !glfwWindowShouldClose(static_cast<GLFWwindow*>(m_MainWindow->GetNativeWindow())));
+
+			std::vector<size_t> closedIndices;
+			for (size_t i = 0; i < m_Windows.size(); ++i)
+			{
+				auto& win = m_Windows[i];
+
+				if (win->ShouldClose())
+				{
+					closedIndices.push_back(i);
+					continue;
+				}
+
+				win->OnUpdate();
+			}
+
+			for (size_t i = closedIndices.size(); i > 0; --i)
+			{
+				size_t idx = closedIndices[i - 1];
+
+				m_Windows.erase(m_Windows.begin() + idx);
+			}
+		} while (m_Running && !m_MainWindow->ShouldClose());
+
+		for (auto& win : m_Windows)
+		{
+			win->Close();
+		}
+
+		m_Windows.clear();
+		m_MainWindow = nullptr;
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) 
@@ -161,6 +190,16 @@ namespace CodePen {
 		m_Running = false;
 		SettingsManager::Get().Save();
 		return true;
+	}
+
+	Window* Application::CreateGLFWWindow(const WindowProps& props)
+	{
+		auto newWindow = std::unique_ptr<Window>(Window::Create(props));
+
+		newWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		Window* windowPtr = newWindow.get();
+		m_Windows.push_back(std::move(newWindow));
+		return windowPtr;
 	}
 
 }

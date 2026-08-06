@@ -92,7 +92,7 @@ namespace CodePen {
 
 		m_Initialized = true;
 		PS_CORE_TRACE("Font loaded: {}", fontPath);
-
+		m_CharWidth = fontSize * 0.5f;
 		return true;
 	}
 
@@ -116,6 +116,11 @@ namespace CodePen {
 		glBegin(GL_QUADS);
 		for (char c : text)
 		{
+			if (c == '\t')
+			{
+				curX += GetCharWidth(c);
+				continue;
+			}
 			auto it = m_Chars.find(c);
 			if (it == m_Chars.end()) continue;
 			const CharInfo& ci = it->second;
@@ -151,11 +156,7 @@ namespace CodePen {
 		float width = 0.0f;
 		for (char c : text)
 		{
-			auto it = m_Chars.find(c);
-			if (it != m_Chars.end())
-				width += it->second.advance;
-			else
-				width += m_FontSize * 0.5f;
+			width += GetCharWidth(c);
 		}
 		return width;
 	}
@@ -177,6 +178,14 @@ namespace CodePen {
 	float TextRenderer::GetFontSize()
 	{
 		return m_FontSize;
+	}
+
+	float TextRenderer::GetCharWidth(char c) const
+	{
+		if (c == '\t') return m_TabWidth * m_CharWidth;
+		auto it = m_Chars.find(c);
+		if (it != m_Chars.end()) return it->second.advance;
+		return m_FontSize * 0.5f;
 	}
 
 }

@@ -46,6 +46,8 @@ namespace CodePen {
 		float m_TabBarX, m_TabBarY, m_TabBarW, m_TabBarH;
 		float m_EditorX, m_EditorY, m_EditorW, m_EditorH;
 
+		float m_TabSpacing = 5.0f;
+
 		void DrawTabBar();
 
 		void DrawTab(int index, float x, float y, float w, float h, bool active);

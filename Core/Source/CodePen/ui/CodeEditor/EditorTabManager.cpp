@@ -125,7 +125,7 @@ namespace CodePen {
 				break;
 			}
 			DrawTab(i, tabX, tabY, tabW, tabH, tab.isActive);
-			tabX += tabW;
+			tabX += tabW + m_TabSpacing;
 		}
 	}
 
@@ -135,7 +135,7 @@ namespace CodePen {
 		{
 			if (active)
 			{
-				glColor4f(0.25f, 0.25f, 0.28f, 0.7f);
+				glColor4f(0.25f, 0.25f, 0.28f, 1.0f);
 			}
 			else
 			{
@@ -146,11 +146,11 @@ namespace CodePen {
 		{
 			if (active)
 			{
-				glColor4f(0.8f, 0.8f, 0.83f, 0.7f);
+				glColor4f(0.9f, 0.9f, 0.93f, 1.0f);
 			}
 			else
 			{
-				glColor4f(0.9f, 0.9f, 0.93f, 0.7f);
+				glColor4f(0.8f, 0.8f, 0.83f, 0.7f);
 			}
 		}
 

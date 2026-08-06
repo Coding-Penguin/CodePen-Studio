@@ -291,10 +291,8 @@ namespace CodePen
 		float accumulated = 0.0f;
 		for (char c : lineStr)
 		{
-			std::string ch(1, c);
-			float charWidth = m_RegularFont->GetTextWidth(ch);
-			if (accumulated + charWidth / 2 > localX + m_ScrollX)
-				break;
+			float charWidth = TextRenderer::Get().GetCharWidth(c);
+			if (accumulated + charWidth / 2 > localX + m_ScrollX) break;
 			accumulated += charWidth;
 			col++;
 		}

@@ -8,7 +8,7 @@ namespace CodePen {
 	struct AppSettings
 	{
 		int themeIndex = 3;
-		int channelIndex = 1;
+		int channelIndex = 0;
 		int fontSize = 20;
 
 		std::vector<std::string> recentFiles;

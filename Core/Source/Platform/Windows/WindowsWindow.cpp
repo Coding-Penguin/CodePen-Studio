@@ -65,7 +65,14 @@ namespace CodePen {
 		m_CursorNWSE = glfwCreateStandardCursor(GLFW_RESIZE_NWSE_CURSOR);
 		m_CursorNESW = glfwCreateStandardCursor(GLFW_RESIZE_NESW_CURSOR);
 
-		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		GLFWwindow* sharedContext = nullptr;
+
+		auto* app = Application::GetPointer();
+		if (app && app->GetWindowPointer())
+		{
+			sharedContext = static_cast<GLFWwindow*>(app->GetWindowPointer()->GetNativeWindow());
+		}
+		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, sharedContext);
 		glfwMakeContextCurrent(m_Window);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		PS_CORE_ASSERT(status, "Could not initialize Glad!");
@@ -417,6 +424,16 @@ namespace CodePen {
 		image.height = height;
 		image.pixels = data;
 		glfwSetWindowIcon(window, 1, &image);
+	}
+
+	void WindowsWindow::Close()
+	{
+		glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
+	}
+
+	bool WindowsWindow::ShouldClose() const
+	{
+		return glfwWindowShouldClose(m_Window) == GLFW_TRUE;
 	}
 
 }

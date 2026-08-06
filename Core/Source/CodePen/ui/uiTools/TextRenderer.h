@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <unordered_map>
-#include <stb_truetype.h>
 
 namespace CodePen {
 
@@ -23,6 +22,8 @@ namespace CodePen {
 		void Unload();
 
 		bool IsInitialized() const { return m_Initialized; }
+
+		float GetCharWidth(char c) const;
 	private:
 		struct CharInfo
 		{
@@ -38,6 +39,8 @@ namespace CodePen {
 		int m_AtlasWidth = 0, m_AtlasHeight = 0;
 		std::unordered_map<char, CharInfo> m_Chars;
 		static float m_FontSize;
+		int m_TabWidth = 4;
+		float m_CharWidth = 0.0f;
 	};
 
 }

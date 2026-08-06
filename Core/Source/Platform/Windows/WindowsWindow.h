@@ -30,6 +30,9 @@ namespace CodePen {
 
 		inline virtual void* GetNativeWindow() const override;
 
+		void Close() override;
+		bool ShouldClose() const override;
+
 		void SetUnsemi_transparency(double value) override;
 
 		void SetWindowIcon(GLFWwindow* window) override;

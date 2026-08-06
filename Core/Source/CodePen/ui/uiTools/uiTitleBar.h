@@ -26,9 +26,6 @@ namespace CodePen
 		void DrawMaximizeButton(float x, float y, float w, float h, bool hovered, bool isMaximized);
 		void DrawCloseButton(float x, float y, float w, float h, bool hovered);
 	private:
-		float m_AccumulatedDragX = 0.0f;
-		float m_AccumulatedDragY = 0.0f;
-
 		std::unique_ptr<PhotoRenderer> m_Logo;
 		std::vector<std::unique_ptr<uiButton>> m_Buttons;
 

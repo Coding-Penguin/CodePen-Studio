@@ -21,6 +21,8 @@
 #include "CodePen/Events/KeyEvent.h"
 #include "CodePen/Events/MouseEvent.h"
 
+#include "CodePen/Application.h"
+
 #include <stb_image.h>
 
 namespace CodePen {
@@ -72,7 +74,14 @@ namespace CodePen {
 		if (ChannelManager::GetChannel() == Channel::Preview)
 			glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
-		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		GLFWwindow* sharedContext = nullptr;
+
+		auto* app = Application::GetPointer();
+		if (app && app->GetWindow().GetNativeWindow())
+		{
+			sharedContext = static_cast<GLFWwindow*>(app->GetWindow().GetNativeWindow());
+		}
+		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, sharedContext);
 		glfwMakeContextCurrent(m_Window);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		PS_CORE_ASSERT(status, "Could not initialize Glad!");
@@ -399,6 +408,16 @@ namespace CodePen {
 		image.height = height;
 		image.pixels = data;
 		glfwSetWindowIcon(window, 1, &image);
+	}
+
+	void LinuxWindow::Close()
+	{
+		glfwSetWindowShouldClose(m_Window, GLFW_TRUE);
+	}
+
+	bool LinuxWindow::ShouldClose() const
+	{
+		return glfwWindowShouldClose(m_Window) == GLFW_TRUE;
 	}
 
 }

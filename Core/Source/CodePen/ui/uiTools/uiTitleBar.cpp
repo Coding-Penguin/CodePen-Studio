@@ -77,9 +77,12 @@ namespace CodePen
 
 	void uiTitleBar::OnUpdate(float deltaTime)
 	{
-		if (m_Logo && m_Logo->IsLoaded())
+		if (ChannelManager::GetChannel() == Channel::Preview)
 		{
-			m_Logo->Draw(10, 10, 40, 40);
+			if (m_Logo && m_Logo->IsLoaded())
+			{
+				m_Logo->Draw(10, 10, 40, 40);
+			}
 		}
 
 		for (auto& btn : m_Buttons) 
@@ -110,36 +113,21 @@ namespace CodePen
 				return true;
 		}
 
-		MouseMovedEvent& e = (MouseMovedEvent&)event;
-		float mx = e.GetX(), my = e.GetY();
-
 		if (event.GetEventType() == EventType::MouseMoved)
 		{
+			MouseMovedEvent& e = (MouseMovedEvent&)event;
+			float mx = e.GetX(), my = e.GetY();
+
 			if (ChannelManager::GetChannel() == Channel::Preview)
 			{
 				if (m_DraggingMainWindow)
 				{
 					float dx = mx - m_DragStartX;
 					float dy = my - m_DragStartY;
-
-					m_AccumulatedDragX += dx;
-					m_AccumulatedDragY += dy;
-
-					if (std::abs(m_AccumulatedDragX) >= 1.0f || std::abs(m_AccumulatedDragY) >= 1.0f)
-					{
-						int newX = m_WindowStartX + (int)(m_AccumulatedDragX);
-						int newY = m_WindowStartY + (int)(m_AccumulatedDragY);
-						auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-						glfwSetWindowPos(window, newX, newY);
-
-						m_WindowStartX = newX;
-						m_WindowStartY = newY;
-						m_AccumulatedDragX -= (int)m_AccumulatedDragX;
-						m_AccumulatedDragY -= (int)m_AccumulatedDragY;
-					}
-
-					m_DragStartX = mx;
-					m_DragStartY = my;
+					int newX = m_WindowStartX + (int)(dx + 0.5f);
+					int newY = m_WindowStartY + (int)(dy + 0.5f);
+					auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+					glfwSetWindowPos(window, newX, newY);
 					return true;
 				}
 			}
@@ -190,7 +178,7 @@ namespace CodePen
 				}
 			}
 
-			if (my < 30)
+			if (my < 50)
 			{
 				bool hitButton = false;
 

@@ -15,7 +15,6 @@ namespace CodePen {
 
 	void uiShortcutBar::OnAttach()
 	{
-		PS_CORE_INFO("uiShortcutBar attached");
 	}
 
 	void uiShortcutBar::OnDetach()

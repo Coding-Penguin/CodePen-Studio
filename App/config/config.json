@@ -1,13 +1,23 @@
 {
     "WindowHeight": 1000,
     "WindowWidth": 1720,
-    "channelIndex": 1,
+    "channelIndex": 0,
     "fileExplorerExpandedState": {
-        "H:/Programming/Projects/CppProject/Pulsar": true
+        "H:/Programming/Projects/CppProject": true,
+        "H:/Programming/Projects/CppProject/CodePen-Studio": true,
+        "H:/Programming/Projects/CppProject/CodePen-Studio/Core": true,
+        "H:/Programming/Projects/CppProject/CodePen-Studio/Core/Source": true,
+        "H:/Programming/Projects/CppProject/CodePen-Studio/Core/Source/CodePen": true,
+        "H:/Programming/Projects/CppProject/CodePen-Studio/Core/Source/Platform": true
     },
     "fileExplorerScrollY": 0.0,
     "fontSize": 20,
-    "openFiles": [],
-    "recentFiles": [],
+    "openFiles": [
+        "H:/Programming/Projects/CppProject/CodePen-Studio/Core/Source/CodePen/Application.cpp"
+    ],
+    "recentFiles": [
+        "H:/Programming/Projects/CppProject/CodePen-Studio/Core/Source/CodePen/Application.cpp",
+        "H:/Programming/Projects/CppProject/GetHazel.txt"
+    ],
     "themeIndex": 3
 }

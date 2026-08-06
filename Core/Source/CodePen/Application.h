@@ -20,12 +20,17 @@ namespace CodePen {
 		void PushLayer(class Layer* layer);
 		void PushOverlay(class Layer* overlay);
 
+		Window* CreateGLFWWindow(const WindowProps& props);
+
+		inline static Application* GetPointer() { return s_Instance; }
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_MainWindow; }
+		inline Window* GetWindowPointer() { return m_MainWindow.get(); }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<class Window> m_MainWindow;
+		std::vector<std::unique_ptr<Window>> m_Windows;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 		static Application* s_Instance;
